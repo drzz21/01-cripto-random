@@ -7,6 +7,8 @@ import { RandomNumber } from './components/RandomNumber';
 //que nos retorna la API
 
 const getCryptoNumber = async (): Promise<number> => {
+	// throw 'no se pudo obtener el numero'
+
 	const response = await fetch(
 		'https://www.random.org/integers/?num=1&min=1&max=500&col=1&base=10&format=plain&rnd=new',
 	).then((response) => response.json());
@@ -33,6 +35,16 @@ function App() {
 		// 		si tuvieramos argumentos en la funcion se haria algo como
 		// queryFn: () => getCryptoNumber(arg1, arg2, arg3)
 		// staleTime: 1000 * 5, // 1 minuto
+		// con esta configuracion, anulamos la consulta automatica
+		//que se dispara al entrar nuevamente en la ventana
+		refetchOnWindowFocus: false, 
+		//por defecto si las peticiones fallan se reintentan
+		//con esta configuracion anulamos el reintento
+		//y con el delay, cambiamos el tiempo que tarda entre cada reintento
+		//en caso de que exista, en retry tambien podemos asignar un valor
+		//por defecto de reintentos que por defecto son 3
+		// retry: false,
+		// retryDelay: 1000 * 5,
 	});
 
 	return (
@@ -42,7 +54,7 @@ function App() {
 			{isFetching ? <h1>Cargando...</h1> : <h1>Número: {number}</h1>}
 
 			{/* creamos otro componente para ver como comparten estado ambos elementos mediante tanstack query */}
-			<RandomNumber />
+			{/* <RandomNumber /> */}
 
 			<div>{JSON.stringify(error)}</div>
 

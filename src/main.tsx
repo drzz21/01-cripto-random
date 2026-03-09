@@ -13,7 +13,16 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 //inicializamos el queryclient
 
-const queryClient = new QueryClient();
+//de este modo cambiamos la configuracion por defecto
+//de los queries si queremos que todos tengan
+//una estructura base inicial
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			// refetchOnWindowFocus: false,
+		},
+	},
+});
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
